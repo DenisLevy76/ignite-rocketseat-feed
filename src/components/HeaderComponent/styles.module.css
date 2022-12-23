@@ -1,0 +1,18 @@
+.header {
+  background-color: var(--gray-800);
+  padding: 1.25rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.header__img {
+  width: 2.5rem;
+}
