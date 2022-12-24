@@ -1,14 +1,14 @@
 import styles from './styles.module.css';
 import { PencilSimpleLine } from 'phosphor-react';
+import { AvatarComponent } from '../AvatarComponent';
 
 export const SidebarComponent: React.FC = () => {
   return (
     <aside className={styles.sidebar}>
       <figure>
-        <img
+        <AvatarComponent
           src="https://images.unsplash.com/photo-1563089145-599997674d42?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=50"
           alt="user banner"
-          className={styles.aside__banner}
         />
       </figure>
       <div className={styles.aside__profile}>

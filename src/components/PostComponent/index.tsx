@@ -1,3 +1,5 @@
+import { AvatarComponent } from '../AvatarComponent';
+import { CommentComponent } from '../CommentComponent';
 import styles from './styles.module.css';
 
 export const PostComponent: React.FC = () => {
@@ -5,10 +7,7 @@ export const PostComponent: React.FC = () => {
     <article className={styles.post}>
       <header className={styles.post__header}>
         <div className={styles.user_info}>
-          <img
-            src="https://avatars.githubusercontent.com/u/62116847?v=4"
-            className={styles.avatar}
-          />
+          <AvatarComponent src="https://avatars.githubusercontent.com/u/62116847?v=4" />
           <div className={styles.user_data}>
             <strong>Denis Levy</strong>
             <p>Web Developer</p>
@@ -55,6 +54,12 @@ export const PostComponent: React.FC = () => {
           <button type="submit">Publicar</button>
         </footer>
       </form>
+
+      <ul>
+        <li>
+          <CommentComponent />
+        </li>
+      </ul>
     </article>
   );
 };
