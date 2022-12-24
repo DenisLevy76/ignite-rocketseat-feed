@@ -11,5 +11,11 @@ export const AvatarComponent: React.FC<AvatarComponentProps> = ({
   isOnline = false,
   ...props
 }) => {
-  return <img src={src} className={styles.avatar} {...props} />;
+  return (
+    <img
+      src={src}
+      className={`${styles.avatar} ${isOnline ? styles.online : ''}`}
+      {...props}
+    />
+  );
 };

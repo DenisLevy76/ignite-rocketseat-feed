@@ -14,3 +14,13 @@
   flex-direction: column;
   gap: 2rem;
 }
+
+@media screen and (max-width: 850px) {
+  html {
+    font-size: 87.5%;
+  }
+
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+}
