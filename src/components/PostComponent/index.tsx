@@ -1,5 +1,6 @@
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { FormEvent, useState } from 'react';
 import { AvatarComponent } from '../AvatarComponent';
 import { CommentComponent } from '../CommentComponent';
 import styles from './styles.module.css';
@@ -35,6 +36,23 @@ export interface PostComponentProps {
 export const PostComponent: React.FC<PostComponentProps> = ({
   post: { author, content, id, publishedAt },
 }) => {
+  const [comments, setComments] = useState<string[]>(['Muito legal']);
+  const [commentText, setCommentText] = useState<string>('');
+
+  const handleCreateComment = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setComments((prevValue) => [...prevValue, commentText]);
+    setCommentText('');
+  };
+
+  const deleteComment = (commentToDelete: string) => {
+    const commentsWithoutDeleteOne = comments.filter(
+      (comment) => comment !== commentToDelete
+    );
+    setComments(commentsWithoutDeleteOne);
+  };
+
   return (
     <article className={styles.post}>
       <header className={styles.post__header}>
@@ -60,43 +78,43 @@ export const PostComponent: React.FC<PostComponentProps> = ({
         </time>
       </header>
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
-
-        <p>
-          Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
-          no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀
-        </p>
-
-        <p>
-          <a href="/404" className={styles.link}>
-            👉 jane.design/doctorcare
-          </a>
-        </p>
-
-        <p>
-          <a href="/404" className={styles.link}>
-            #novoprojeto{' '}
-          </a>
-          <a href="/404" className={styles.link}>
-            #nlw{' '}
-          </a>
-          <a href="/404" className={styles.link}>
-            #rocketseat
-          </a>
-        </p>
+        {content.map((line) => {
+          if (line.type === 'paragraph') {
+            return <p key={line.content}>{line.content}</p>;
+          } else if (line.type === 'link') {
+            return (
+              <p key={line.content}>
+                <a href="/404">{line.content}</a>
+              </p>
+            );
+          }
+        })}
       </div>
-      <form className={styles.comment_form}>
+      <form onSubmit={handleCreateComment} className={styles.comment_form}>
         <strong>Deixe seu feedback</strong>
-        <textarea placeholder="Escreva um comentário..." />
+        <textarea
+          placeholder="Escreva um comentário..."
+          name="comment"
+          onChange={(event) => setCommentText(event.target.value)}
+          value={commentText}
+          required
+        />
         <footer>
-          <button type="submit">Publicar</button>
+          <button type="submit" disabled={!commentText}>
+            Publicar
+          </button>
         </footer>
       </form>
 
       <ul>
-        <li>
-          <CommentComponent />
-        </li>
+        {comments.map((comment) => (
+          <li key={comment}>
+            <CommentComponent
+              content={comment}
+              onDeleteComment={deleteComment}
+            />
+          </li>
+        ))}
       </ul>
     </article>
   );
