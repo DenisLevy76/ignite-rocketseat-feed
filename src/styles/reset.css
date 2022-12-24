@@ -10,7 +10,13 @@
   --gray-800: #202024;
   --gray-900: #121214;
 
+  --green-300: #02ca8e;
   --green-500: #00875f;
+}
+
+:focus {
+  outline: transparent;
+  box-shadow: 0 0 0 2px var(--primary);
 }
 
 * {
@@ -79,4 +85,9 @@ table {
 a {
   text-decoration: none;
   color: var(--primary);
+  font-weight: bold;
+}
+
+a:hover {
+  color: var(--green-300);
 }
