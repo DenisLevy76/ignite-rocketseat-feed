@@ -1,27 +1,62 @@
+import { format, formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { AvatarComponent } from '../AvatarComponent';
 import { CommentComponent } from '../CommentComponent';
 import styles from './styles.module.css';
 
-export const PostComponent: React.FC = () => {
+export interface IPost {
+  id: number;
+  author: {
+    avatarUrl: string;
+    name: string;
+    role: string;
+  };
+  content: [
+    {
+      type: string;
+      content: string;
+    },
+    {
+      type: string;
+      content: string;
+    },
+    {
+      type: string;
+      content: string;
+    }
+  ];
+  publishedAt: Date;
+}
+
+export interface PostComponentProps {
+  post: IPost;
+}
+
+export const PostComponent: React.FC<PostComponentProps> = ({
+  post: { author, content, id, publishedAt },
+}) => {
   return (
     <article className={styles.post}>
       <header className={styles.post__header}>
         <div className={styles.user_info}>
-          <AvatarComponent
-            src="https://avatars.githubusercontent.com/u/62116847?v=4"
-            isOnline
-          />
+          <AvatarComponent src={author.avatarUrl} isOnline />
           <div className={styles.user_data}>
-            <strong>Denis Levy</strong>
-            <p>Web Developer</p>
+            <strong>{author.name}</strong>
+            <p>{author.role}</p>
           </div>
         </div>
 
         <time
-          title="30 de Novembro de 2022, às 8 horas"
-          dateTime="2022-11-30 08:13:30"
+          title={format(
+            publishedAt,
+            "dd 'de' MMMM 'de' yyyy, 'às' H:mm 'horas'",
+            {
+              locale: ptBR,
+            }
+          )}
+          dateTime={publishedAt.toISOString()}
         >
-          Públicado há 1h
+          {formatDistanceToNow(publishedAt, { locale: ptBR, addSuffix: true })}
         </time>
       </header>
       <div className={styles.content}>
